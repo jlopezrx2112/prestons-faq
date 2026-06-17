@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)file:///C:/Users/DBA_Lopez/Downloads/index_1.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prestons Pharmacy — Staff Guide Hub</title>
+<style>
+  :root {
+    --teal-50: #e1f5ee;
+    --teal-100: #9fe1cb;
+    --teal-200: #5dcaa5;
+    --teal-600: #0f6e56;
+    --teal-800: #085041;
+    --gray-50: #f7f7f5;
+    --gray-100: #efefeb;
+    --gray-200: #d3d1c7;
+    --gray-500: #888780;
+    --gray-700: #5f5e5a;
+    --gray-900: #2c2c2a;
+    --amber-50: #faeeda;
+    --amber-100: #fac775;
+    --amber-600: #854f0b;
+    --amber-800: #633806;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-900);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--teal-600);
+    color: #fff;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-pill {
+    background: rgba(255,255,255,0.18);
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .header-search {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: var(--radius-sm);
+    padding: 0 10px;
+    gap: 6px;
+    height: 34px;
+    min-width: 220px;
+  }
+  .header-search input {
+    background: none;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 13px;
+    width: 100%;
+  }
+  .header-search input::placeholder { color: rgba(255,255,255,0.6); }
+  .search-icon { color: rgba(255,255,255,0.7); font-size: 14px; }
+
+  /* ── Layout ── */
+  .app { display: flex; min-height: calc(100vh - 56px); }
+
+  /* ── Sidebar ── */
+  aside {
+    width: 220px;
+    flex-shrink: 0;
+    background: #fff;
+    border-right: 1px solid var(--gray-200);
+    padding: 1.5rem 0;
+    position: sticky;
+    top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+  }
+  .sidebar-section {
+    margin-bottom: 1.5rem;
+  }
+  .sidebar-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    padding: 0 1.25rem;
+    margin-bottom: 4px;
+  }
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 1.25rem;
+    font-size: 13.5px;
+    color: var(--gray-700);
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: all 0.1s;
+    text-decoration: none;
+  }
+  .sidebar-item:hover {
+    background: var(--gray-50);
+    color: var(--gray-900);
+  }
+  .sidebar-item.active {
+    background: var(--teal-50);
+    color: var(--teal-600);
+    border-left-color: var(--teal-600);
+    font-weight: 500;
+  }
+  .sidebar-count {
+    margin-left: auto;
+    background: var(--gray-100);
+    color: var(--gray-500);
+    font-size: 11px;
+    border-radius: 10px;
+    padding: 1px 7px;
+  }
+
+  /* ── Main content ── */
+  main {
+    flex: 1;
+    padding: 2rem 2.5rem;
+    max-width: 860px;
+  }
+
+  /* ── Guide list view ── */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  .page-heading {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 4px;
+  }
+  .page-sub {
+    font-size: 13.5px;
+    color: var(--gray-500);
+    margin-bottom: 1.75rem;
+  }
+
+  .guide-card {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .guide-card:hover {
+    border-color: var(--teal-200);
+    box-shadow: 0 2px 8px rgba(15,110,86,0.07);
+  }
+  .guide-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    background: var(--teal-50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+  .guide-meta { flex: 1; }
+  .guide-title {
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--gray-900);
+    margin-bottom: 2px;
+  }
+  .guide-desc {
+    font-size: 12.5px;
+    color: var(--gray-500);
+  }
+  .guide-arrow {
+    color: var(--gray-200);
+    font-size: 18px;
+    transition: color 0.1s;
+  }
+  .guide-card:hover .guide-arrow { color: var(--teal-600); }
+  .badge {
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 20px;
+    padding: 2px 9px;
+  }
+  .badge-teal { background: var(--teal-50); color: var(--teal-600); }
+  .badge-amber { background: var(--amber-50); color: var(--amber-600); }
+
+  /* ── Guide detail view ── */
+  .guide-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    color: var(--gray-500);
+    margin-bottom: 1.5rem;
+  }
+  .guide-nav a {
+    color: var(--teal-600);
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .guide-nav a:hover { text-decoration: underline; }
+
+  .guide-detail-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .guide-detail-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .guide-detail-meta {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .guide-detail-meta span {
+    font-size: 12.5px;
+    color: var(--gray-500);
+  }
+
+  .warning-box {
+    background: var(--amber-50);
+    border: 1px solid var(--amber-100);
+    border-left: 3px solid var(--amber-600);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 1.5rem;
+    font-size: 13.5px;
+    color: var(--amber-800);
+    line-height: 1.55;
+  }
+  .warning-box strong {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 3px;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--amber-600);
+  }
+
+  .steps-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 1rem;
+  }
+
+  .step {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+  }
+  .step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--teal-600);
+    color: #fff;
+    font-size: 12.5px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-body {
+    flex: 1;
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+  }
+  .step-body p { font-size: 14px; color: var(--gray-900); line-height: 1.55; }
+  .step-body .step-detail {
+    margin-top: 6px;
+    font-size: 12.5px;
+    color: var(--gray-500);
+  }
+  code {
+    background: var(--gray-100);
+    color: var(--gray-700);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+  }
+
+  .info-box {
+    background: #f0f9f5;
+    border: 1px solid var(--teal-100);
+    border-left: 3px solid var(--teal-200);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1.1rem;
+    margin-top: 1.5rem;
+    font-size: 13.5px;
+    color: var(--teal-800);
+    line-height: 1.55;
+  }
+  .info-box strong {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--teal-600);
+  }
+  .info-box ul {
+    margin: 6px 0 0 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  /* ── Empty state ── */
+  .empty-state {
+    background: #fff;
+    border: 1px dashed var(--gray-200);
+    border-radius: var(--radius-md);
+    padding: 2.5rem;
+    text-align: center;
+    color: var(--gray-500);
+    font-size: 13.5px;
+    margin-top: 1rem;
+  }
+  .empty-state .empty-icon { font-size: 28px; margin-bottom: 10px; }
+  .empty-state p { max-width: 300px; margin: 0 auto; line-height: 1.6; }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    aside { display: none; }
+    main { padding: 1.25rem; }
+    .header-search { min-width: 140px; }
+  }
+
+  /* Search highlight */
+  .no-results {
+    text-align: center;
+    padding: 2rem;
+    color: var(--gray-500);
+    font-size: 13.5px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    Prestons Pharmacy
+    <span class="logo-pill">Staff Hub</span>
+  </div>
+  <div class="header-search">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search guides…" oninput="handleSearch(this.value)">
+  </div>
+</header>
+
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Browse</div>
+      <a class="sidebar-item active" onclick="showCategory(&#39;all&#39;)" id="cat-all">
+        All guides
+        <span class="sidebar-count" id="count-all">1</span>
+      </a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Categories</div>
+      <a class="sidebar-item" onclick="showCategory(&#39;inventory&#39;)" id="cat-inventory">
+        📦 Inventory
+        <span class="sidebar-count" id="count-inventory">1</span>
+      </a>
+      <a class="sidebar-item" onclick="showCategory(&#39;orders&#39;)" id="cat-orders">
+        📋 Orders
+        <span class="sidebar-count" id="count-orders">0</span>
+      </a>
+      <a class="sidebar-item" onclick="showCategory(&#39;patients&#39;)" id="cat-patients">
+        🧑‍⚕️ Patients
+        <span class="sidebar-count" id="count-patients">0</span>
+      </a>
+      <a class="sidebar-item" onclick="showCategory(&#39;system&#39;)" id="cat-system">
+        ⚙️ System
+        <span class="sidebar-count" id="count-system">0</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main>
+
+    <!-- LIST VIEW -->
+    <div id="view-list" class="view active">
+      <h1 class="page-heading" id="listHeading">All guides</h1>
+      <p class="page-sub" id="listSub">Step-by-step instructions for common LIFE FILE tasks and pharmacy workflows.</p>
+
+      <div id="guideList"></div>
+      <div id="noResults" class="no-results" style="display:none;">No guides found for that search.</div>
+
+      <!-- Placeholder for future categories -->
+      <div id="emptyCategory" style="display:none;">
+        <div class="empty-state">
+          <div class="empty-icon">📝</div>
+          <p>No guides in this category yet. More will be added as we document workflows together.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAIL VIEW -->
+    <div id="view-detail" class="view">
+      <div id="detailContent"></div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const guides = [
+  {
+    id: "lot-inventory-adjustment",
+    category: "inventory",
+    title: "Update inventory (lot inventory adjustment)",
+    desc: "Decrease stock on a compounded product lot using Barcode Lot Event Management.",
+    icon: "📦",
+    steps: [
+      {
+        text: "From the main screen, go to <strong>Control Panel</strong> in the left navigation menu.",
+      },
+      {
+        text: "Scroll to the <strong>Lot Compounding Options</strong> section and click <strong>Barcode Events</strong>.",
+        detail: "This opens a pop-up window called "Barcode Lot Event Management"."
+      },
+      {
+        text: "In the left sidebar of that window, click <strong>Lot Inventory Adjustment</strong>.",
+      },
+      {
+        text: "Enter the <strong>Compound Product Lot ID</strong> (scan or type manually) and press Enter.",
+      },
+      {
+        text: "Verify the product details that auto-populate on the left side of the screen.",
+      },
+      {
+        text: "Fill in the required fields on the right side of the screen.",
+        detail: "Fields: <strong>Adjustment type</strong> — select <code>Decrease Inventory</code> &nbsp;·&nbsp; <strong>Adjustment reason</strong> (dropdown) &nbsp;·&nbsp; <strong>Quantity</strong> &nbsp;·&nbsp; <strong>Adjustment note</strong>"
+      },
+      {
+        text: "Click <strong>Send</strong> to submit."
+      }
+    ],
+    warning: {
+      heading: "Important limitation",
+      body: "This process can only <strong>decrease</strong> inventory. You cannot add stock to a lot this way. If a lot shows a negative count, you can bring it up to 0 but no further. To add new inventory, a new lot must be created."
+    },
+    info: {
+      heading: "Adjustment reason options",
+      items: ["Spillage", "Waste", "Destruction", "Testing", "Other", "Shelf Count", "Expired Lot", "Intercompany Transfer"]
+    }
+  }
+];
+
+let currentCategory = "all";
+let currentSearch = "";
+
+function renderList() {
+  const list = document.getElementById("guideList");
+  const noResults = document.getElementById("noResults");
+  const emptyCategory = document.getElementById("emptyCategory");
+
+  let filtered = guides.filter(g => {
+    const matchCat = currentCategory === "all" || g.category === currentCategory;
+    const matchSearch = !currentSearch ||
+      g.title.toLowerCase().includes(currentSearch.toLowerCase()) ||
+      g.desc.toLowerCase().includes(currentSearch.toLowerCase());
+    return matchCat && matchSearch;
+  });
+
+  list.innerHTML = "";
+
+  if (filtered.length === 0 && currentSearch) {
+    noResults.style.display = "block";
+    emptyCategory.style.display = "none";
+    return;
+  }
+  noResults.style.display = "none";
+
+  if (filtered.length === 0) {
+    emptyCategory.style.display = "block";
+    return;
+  }
+  emptyCategory.style.display = "none";
+
+  filtered.forEach(g => {
+    const card = document.createElement("div");
+    card.className = "guide-card";
+    card.onclick = () => showGuide(g.id);
+    card.innerHTML = `
+      <div class="guide-icon">${g.icon}</div>
+      <div class="guide-meta">
+        <div class="guide-title">${g.title}</div>
+        <div class="guide-desc">${g.desc}</div>
+      </div>
+      <span class="badge badge-teal">${g.steps.length} steps</span>
+      <span class="guide-arrow">›</span>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function showCategory(cat) {
+  currentCategory = cat;
+  currentSearch = "";
+  document.getElementById("searchInput").value = "";
+
+  document.querySelectorAll(".sidebar-item").forEach(el => el.classList.remove("active"));
+  document.getElementById("cat-" + cat).classList.add("active");
+
+  const labels = {
+    all: ["All guides", "Step-by-step instructions for common LIFE FILE tasks and pharmacy workflows."],
+    inventory: ["Inventory", "Managing lot counts, adjustments, and stock in LIFE FILE."],
+    orders: ["Orders", "Processing and managing pharmacy orders."],
+    patients: ["Patient management", "Guides for patient records and profiles."],
+    system: ["System & settings", "Configuration and system-level workflows."]
+  };
+  document.getElementById("listHeading").textContent = labels[cat][0];
+  document.getElementById("listSub").textContent = labels[cat][1];
+
+  showView("list");
+  renderList();
+}
+
+function handleSearch(val) {
+  currentSearch = val;
+  currentCategory = "all";
+  document.querySelectorAll(".sidebar-item").forEach(el => el.classList.remove("active"));
+  document.getElementById("cat-all").classList.add("active");
+  showView("list");
+  renderList();
+}
+
+function showGuide(id) {
+  const guide = guides.find(g => g.id === id);
+  if (!guide) return;
+
+  const stepsHtml = guide.steps.map((s, i) => `
+    <div class="step">
+      <div class="step-num">${i + 1}</div>
+      <div class="step-body">
+        <p>${s.text}</p>
+        ${s.detail ? `<p class="step-detail">${s.detail}</p>` : ""}
+      </div>
+    </div>
+  `).join("");
+
+  const warningHtml = guide.warning ? `
+    <div class="warning-box">
+      <strong>⚠ ${guide.warning.heading}</strong>
+      ${guide.warning.body}
+    </div>
+  ` : "";
+
+  const infoHtml = guide.info ? `
+    <div class="info-box">
+      <strong>${guide.info.heading}</strong>
+      <ul>${guide.info.items.map(item => `<li>${item}</li>`).join("")}</ul>
+    </div>
+  ` : "";
+
+  document.getElementById("detailContent").innerHTML = `
+    <div class="guide-nav">
+      <a onclick="showCategory('${guide.category}')">← Back to ${guide.category === 'all' ? 'all guides' : guide.category}</a>
+    </div>
+    <div class="guide-detail-header">
+      <h1 class="guide-detail-title">${guide.icon} ${guide.title}</h1>
+      <div class="guide-detail-meta">
+        <span class="badge badge-teal">📦 ${guide.category.charAt(0).toUpperCase() + guide.category.slice(1)}</span>
+        <span>${guide.steps.length} steps</span>
+        <span>LIFE FILE</span>
+      </div>
+    </div>
+    ${warningHtml}
+    <div class="steps-label">Steps</div>
+    ${stepsHtml}
+    ${infoHtml}
+  `;
+
+  showView("detail");
+}
+
+function showView(name) {
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  document.getElementById("view-" + name).classList.add("active");
+}
+
+// Update counts
+function updateCounts() {
+  const cats = ["inventory", "orders", "patients", "system"];
+  document.getElementById("count-all").textContent = guides.length;
+  cats.forEach(c => {
+    document.getElementById("count-" + c).textContent = guides.filter(g => g.category === c).length;
+  });
+}
+
+updateCounts();
+renderList();
+</script>
+
+
+</body></html>
